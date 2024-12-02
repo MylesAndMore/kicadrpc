@@ -1,4 +1,3 @@
 pywin32; sys_platform == "win32"
-PyObjC; sys_platform == "darwin"
 python-xlib; sys_platform == "linux"
 pypresence

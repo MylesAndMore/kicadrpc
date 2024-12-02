@@ -3,7 +3,7 @@ from sys import platform
 if platform == "win32":
     import win32gui
 elif platform == "darwin":
-    import AppKit
+    import subprocess
 elif platform == "linux":
     import Xlib.display
     import Xlib.X
@@ -17,7 +17,15 @@ def get_windows() -> list[str]:
         win32gui.EnumWindows(enumHandler, windows)
         return windows
     elif platform == "darwin":
-        return [window.title() for window in AppKit.NSApp().orderedWindows()]
+        result = subprocess.run(
+            ["osascript", "-e", "tell application \"System Events\" to get the name of every window of every process"],
+            capture_output=True,
+            text=True
+        )
+        if result.returncode != 0:
+            raise RuntimeError(f"osascript failed with error '{result.stderr}'")
+        windows = result.stdout.split(", ")
+        return [window.strip() for window in windows if window.strip()]
     elif platform == "linux":
         display = Xlib.display.Display()
         root = display.screen().root

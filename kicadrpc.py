@@ -84,6 +84,7 @@ def main():
             project = parse_project(pcbnew)
             rpc.update(
                 details=f"Working on {project}",
+                state="In the PCB Editor",
                 large_image="pcbnew",
                 large_text="PCB Editor",
                 small_image="kicad",
