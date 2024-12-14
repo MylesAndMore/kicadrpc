@@ -18,8 +18,12 @@ def parse_project_sheet(title: str) -> Tuple[str, str]:
     if "[" in title and "]" in title:
         # Editing a hierarchical sheet in eeschema
         project_part = title.split("[")[1].split("]")[0]
-        project = project_part.split("/")[0]
-        sheet = project_part[len(project) + 1:].strip()
+        if "/" in project_part:
+            project = project_part.split("/")[0]
+            sheet = project_part[len(project) + 1:].strip()
+        else:
+            # Root sheet (but unsaved)
+            project = project_part.strip()
     else:
         # The root sheet in eeschema uses this format, as well as pcbnew and the project manager (always)
         project = title.split("—")[0].strip()
