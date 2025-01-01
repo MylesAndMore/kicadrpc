@@ -73,24 +73,24 @@ def main():
         eeschema = get_eeschema_window()
         pcbnew = get_pcbnew_window()
         kicad = get_kicad_window()
-        if eeschema:
-            project, sheet = parse_project_sheet(eeschema)
-            rpc.update(
-                details=f"Working on {project}",
-                state=f"Editing {sheet}",
-                large_image="eeschema",
-                large_text="Schematic Editor",
-                small_image="kicad",
-                small_text="KiCad EDA",
-                start=began
-            )
-        elif pcbnew:
+        if pcbnew:
             project = parse_project(pcbnew)
             rpc.update(
                 details=f"Working on {project}",
                 state="In the PCB Editor",
                 large_image="pcbnew",
                 large_text="PCB Editor",
+                small_image="kicad",
+                small_text="KiCad EDA",
+                start=began
+            )
+        elif eeschema:
+            project, sheet = parse_project_sheet(eeschema)
+            rpc.update(
+                details=f"Working on {project}",
+                state=f"Editing {sheet}",
+                large_image="eeschema",
+                large_text="Schematic Editor",
                 small_image="kicad",
                 small_text="KiCad EDA",
                 start=began
